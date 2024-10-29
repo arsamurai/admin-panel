@@ -1,0 +1,12 @@
+@import "./_tailwind.css";
+
+@import "simplebar/dist/simplebar.css";
+
+@import "./_dm-sans.css";
+@import "./_public-sans.css";
+
+@import "./components/_global.css";
+@import "./components/_side-menu.css";
+@import "./components/_box.css";
+@import "./components/_tom-select.css";
+@import "./components/_ckeditor.css";
