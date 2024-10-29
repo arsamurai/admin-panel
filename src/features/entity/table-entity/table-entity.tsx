@@ -13,6 +13,14 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
   const table = general?.tables?.find(form => form.id === id)
   const [rows, setRows] = useState<any[]>([])
 
+  const updateCell = (id: number, instance: any) => {
+    if (instance) {
+      setRows(prevRows => prevRows.map(row => (row.id === id ? { ...row, ...instance } : row)))
+    } else {
+      setRows(prevRows => prevRows.filter(row => row.id !== id))
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       if (table?.api_route) {
@@ -54,7 +62,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
                 {table.columns.map(column => (
                   <Table.Td key={column.id} className="whitespace-nowrap">
                     <Cell
-                      id={item.id}
+                      itemId={item.id}
                       data={column.api_object_key ? item[column.api_object_key] : null}
                       type={column.column_type}
                       page={column.page}
@@ -64,6 +72,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
                       api_route={column.api_route}
                       api_command_name={column.api_command_name}
                       buttons={column.buttons}
+                      updateCell={updateCell}
                     />
                   </Table.Td>
                 ))}

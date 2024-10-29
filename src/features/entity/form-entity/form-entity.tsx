@@ -15,7 +15,7 @@ import { FormEntityProps } from "./form.types"
 const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
-  const paramId = searchParams.get("id")
+  const itemId = searchParams.get("id")
   const { general } = useGeneral()
   const form = general?.[variant]?.find(form => form.id === id)
   const parsedParams = form?.api_parameters && JSON.parse(form.api_parameters)
@@ -32,7 +32,7 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   const onUpdateSubmit = async (data: any) => {
     if (form?.api_route) {
       try {
-        const response = await fetch(withBackendHost(`${form.api_route}${paramId}`), {
+        const response = await fetch(withBackendHost(`${form.api_route}${itemId}`), {
           ...parsedParams,
           body: JSON.stringify(data),
         })
@@ -78,9 +78,10 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      reset({})
       if (form?.route_to_fill_form) {
         try {
-          const response = await fetch(withBackendHost(`${form.route_to_fill_form}${paramId}`))
+          const response = await fetch(withBackendHost(`${form.route_to_fill_form}${itemId}`))
 
           if (response.ok) {
             const result = await response.json()
@@ -91,11 +92,11 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
         } catch {
           showToast("Не вдалось завантажити дані!", { type: "error" })
         }
-      } else reset()
+      } else reset({})
     }
 
     fetchData()
-  }, [form, paramId, reset])
+  }, [form, itemId, reset])
 
   if (!form) {
     return null

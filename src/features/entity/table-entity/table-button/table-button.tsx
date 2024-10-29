@@ -1,28 +1,40 @@
 import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { ButtonActionTypeEnum, ButtonEntity } from "@services/general-service"
+import { ButtonActionTypeEnum } from "@services/general-service"
 
 import { ROUTES } from "@shared/constants"
 import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"
 
-const TableButton: FC<ButtonEntity & { param: string | number }> = ({
+import { TableButtonProps } from "./table-button.types"
+
+const TableButton: FC<TableButtonProps> = ({
   title,
   color,
   api_key_param,
   action_type,
   api_route,
   action,
-  param,
+  itemId,
+  updateCell,
 }) => {
   const navigate = useNavigate()
 
   const sendRequest = async () => {
     try {
-      const response = await fetch(withBackendHost(`${api_route}${param}`))
+      const response = await fetch(withBackendHost(`${api_route}${itemId}`), {
+        method: "POST",
+      })
 
-      if (!response.ok) {
+      if (response.ok) {
+        const data = await response.json()
+        if (data.message) {
+          updateCell(itemId, null)
+        } else {
+          updateCell(itemId, data)
+        }
+      } else {
         showToast("Щось пішло не так!", { type: "error" })
       }
     } catch {
@@ -35,7 +47,7 @@ const TableButton: FC<ButtonEntity & { param: string | number }> = ({
       case ButtonActionTypeEnum.SendRequest:
         return sendRequest()
       case ButtonActionTypeEnum.GoToPage:
-        return navigate(`${ROUTES.PAGE.path}/${action}?${api_key_param}=${param}`)
+        return navigate(`${ROUTES.PAGE.path}/${action}?${api_key_param}=${itemId}`)
       case ButtonActionTypeEnum.OpenModal:
         return
       case ButtonActionTypeEnum.Offcanvas:

@@ -6,7 +6,15 @@ import { TableButton } from "../table-button"
 import SwitchVariant from "./cell-variants/switch-variant/switch-variant"
 import { CellProps } from "./cell.types"
 
-const Cell: FC<CellProps> = ({ id, type, data, api_route, api_object_key, buttons }) => {
+const Cell: FC<CellProps> = ({
+  itemId,
+  type,
+  data,
+  api_route,
+  api_object_key,
+  buttons,
+  updateCell,
+}) => {
   switch (type) {
     case ColumnTypeEnum.Text:
       return <p>{data}</p>
@@ -21,7 +29,7 @@ const Cell: FC<CellProps> = ({ id, type, data, api_route, api_object_key, button
     case ColumnTypeEnum.Switch:
       return (
         <SwitchVariant
-          id={id}
+          id={itemId}
           data={typeof data === "boolean" ? data : false}
           api_route={api_route ?? ""}
           api_object_key={api_object_key ?? ""}
@@ -31,7 +39,7 @@ const Cell: FC<CellProps> = ({ id, type, data, api_route, api_object_key, button
       return (
         <div className="flex gap-2">
           {buttons.map(button => (
-            <TableButton key={button.id} {...button} param={id} />
+            <TableButton key={button.id} {...button} itemId={itemId} updateCell={updateCell} />
           ))}
         </div>
       )

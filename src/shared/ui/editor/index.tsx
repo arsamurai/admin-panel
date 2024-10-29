@@ -21,7 +21,7 @@ function Editor<C extends React.ElementType = "div">(props: CkeditorProps<C>) {
         updateData(editorRef.current, { props, cacheData })
       }
     }
-  }, [props.value])
+  }, [editorRef, props])
 
   const {
     as,

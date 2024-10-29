@@ -11,7 +11,8 @@ export interface CellProps
     | "api_command_name"
     | "buttons"
   > {
-  id: number
+  itemId: number
   data: string | number | boolean
   type: string
+  updateCell: (id: number, instance: any) => void
 }
