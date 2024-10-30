@@ -4,7 +4,7 @@ type LabelProps = React.PropsWithChildren & React.ComponentPropsWithoutRef<"labe
 
 function Label(props: LabelProps) {
   return (
-    <label {...props} className={twMerge(["mb-2 inline-block", props.className])}>
+    <label {...props} className={twMerge(["inline-block", props.className])}>
       {props.children}
     </label>
   )

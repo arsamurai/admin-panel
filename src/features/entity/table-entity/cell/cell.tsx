@@ -3,10 +3,11 @@ import { FC } from "react"
 import { ColumnTypeEnum } from "@services/general-service"
 
 import { TableButton } from "../table-button"
-import SwitchVariant from "./cell-variants/switch-variant/switch-variant"
+import { BadgeVariant } from "./cell-variants/badge-variant"
+import { SwitchVariant } from "./cell-variants/switch-variant"
 import { CellProps } from "./cell.types"
 
-const Cell: FC<CellProps> = ({
+export const Cell: FC<CellProps> = ({
   itemId,
   type,
   data,
@@ -25,7 +26,7 @@ const Cell: FC<CellProps> = ({
         </a>
       )
     case ColumnTypeEnum.Badge:
-      return <p>Badge {data}</p>
+      return <BadgeVariant api_route={api_route ?? ""} />
     case ColumnTypeEnum.Switch:
       return (
         <SwitchVariant
@@ -43,6 +44,8 @@ const Cell: FC<CellProps> = ({
           ))}
         </div>
       )
+    default:
+      return null
   }
 }
 

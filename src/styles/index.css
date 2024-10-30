@@ -1,6 +1,7 @@
 @import "./_tailwind.css";
 
 @import "simplebar/dist/simplebar.css";
+@import "tabulator-tables/dist/css/tabulator.css";
 
 @import "./_dm-sans.css";
 @import "./_public-sans.css";
@@ -10,3 +11,5 @@
 @import "./components/_box.css";
 @import "./components/_tom-select.css";
 @import "./components/_ckeditor.css";
+@import "./components/_scrollbar-hidden.css";
+@import "./components/_tabulator.css";

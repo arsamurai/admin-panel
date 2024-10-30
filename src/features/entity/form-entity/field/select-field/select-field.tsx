@@ -1,41 +1,30 @@
-import { FC, useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
+import { api } from "@services/api"
+
 import { Select, SelectOption } from "@shared/ui/fields"
-import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"
 
 import { SelectFieldProps } from "./select-field.types"
 
 const SelectField: FC<SelectFieldProps> = ({ name, isMulti, size, optionsRoute, routeParam }) => {
   const { control } = useFormContext()
-  const [options, setOptions] = useState<SelectOption[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
+  const parsedParams = JSON.parse(routeParam)
+  const queryString = new URLSearchParams(parsedParams.params).toString()
 
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const parsedParams = JSON.parse(routeParam)
-        const queryString = new URLSearchParams(parsedParams.params).toString()
-
-        const response = await fetch(withBackendHost(`${optionsRoute}&${queryString}`))
-        const data = await response.json()
-
-        const formattedOptions = Object.keys(data.data).map(key => ({
-          value: Number(key),
-          label: data.data[key],
-        }))
-
-        setOptions(formattedOptions)
-      } catch {
-        showToast("Не вдалось завантажити опції для select", { type: "error" })
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchOptions()
-  }, [optionsRoute, routeParam])
+  const { data, isLoading } = useQuery({
+    queryKey: ["select", optionsRoute, queryString],
+    queryFn: () =>
+      api.get<{ data: { data: any } }>(withBackendHost(`${optionsRoute}&${queryString}`)),
+    select: data =>
+      Object.entries(data.data.data ?? {}).map(([key, value]) => ({
+        value: Number(key),
+        label: value,
+      })),
+    retry: false,
+  })
 
   return (
     <Controller
@@ -44,21 +33,21 @@ const SelectField: FC<SelectFieldProps> = ({ name, isMulti, size, optionsRoute, 
       render={({ field: { name, value, onChange } }) => (
         <Select
           name={name}
-          options={options}
+          options={data}
           value={
             isMulti
-              ? (options.filter(c => value?.includes(c.value)) ?? [])
-              : options?.find(c => c.value === value)
+              ? (data?.filter(c => value?.includes(c.value)) ?? [])
+              : data?.find(c => c.value === value)
           }
           onChange={option => {
             if (isMulti) {
-              onChange(options?.map(option => option.value))
+              onChange(data?.map(option => option.value))
             } else {
               onChange((option as SelectOption)?.value)
             }
           }}
           isMulti={isMulti}
-          isLoading={loading}
+          isLoading={isLoading}
           className={size}
         />
       )}

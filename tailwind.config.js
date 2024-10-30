@@ -71,11 +71,10 @@ export default {
     require("@tailwindcss/forms"),
     plugin(function ({ addBase }) {
       addBase({
-        // Default colors
         ":root": {
-          "--color-theme-1": toRGB(colors.indigo["800"]),
-          "--color-theme-2": toRGB(colors.blue["900"]),
-          "--color-primary": toRGB(colors.indigo["800"]),
+          "--color-theme-1": toRGB(colors.sky["700"]),
+          "--color-theme-2": toRGB(colors.rose["800"]),
+          "--color-primary": toRGB(colors.sky["700"]),
           "--color-secondary": toRGB(colors.slate["200"]),
           "--color-success": toRGB(colors.teal["600"]),
           "--color-info": toRGB(colors.cyan["600"]),

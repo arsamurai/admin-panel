@@ -70,14 +70,60 @@
     margin-top: theme("spacing.5");
     margin-bottom: theme("spacing.3");
   }
+  &__divider + li {
+    > .side-menu__link {
+      border-top-left-radius: 0.6rem;
+      border-top-right-radius: 0.6rem;
+    }
+  }
+  & li:not(&__divider + li) {
+    > .side-menu__link {
+      border-top-style: dotted;
+      border-top-color: theme("colors.slate.200" / 50%);
+    }
+  }
+  li:has(+ .side-menu__divider) {
+    > .side-menu__link {
+      border-bottom-left-radius: 0.6rem;
+      border-bottom-right-radius: 0.6rem;
+      border-bottom-width: 1px;
+    }
+    > .side-menu__link--active-dropdown {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      margin-bottom: -1px;
+      & ~ ul {
+        > li:last-of-type {
+          > .side-menu__link {
+            border-bottom-left-radius: 0.6rem;
+            border-bottom-right-radius: 0.6rem;
+            border-bottom-width: 1px;
+          }
+          > .side-menu__link--active-dropdown {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-bottom: -1px;
+            & ~ ul {
+              > li:last-of-type {
+                > .side-menu__link {
+                  border-bottom-left-radius: 0.6rem;
+                  border-bottom-right-radius: 0.6rem;
+                  border-bottom-width: 1px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   &__link {
     display: flex;
     align-items: center;
-    margin-bottom: theme("spacing.1");
-    border-radius: 0.6rem;
-    border: 1px solid transparent;
+    border-width: 1px 1px 0px 1px;
+    box-shadow: 0px 2px 3px #0000000b;
     padding: theme("spacing.3") theme("spacing[3.5]");
-    transition-property: theme("transitionProperty.all");
+    transition-property: theme("transitionProperty.colors");
     transition-timing-function: theme("transitionTimingFunction.in");
     transition-duration: theme("transitionDuration.200");
     &--active {
@@ -123,33 +169,55 @@
     position: relative;
     > li {
       > .side-menu__link {
-        &--active {
-          background: theme("colors.white");
-          border-color: theme("colors.slate.200");
-          box-shadow: 0px 2px 3px #0000000b;
+        background-color: theme("colors.white");
+        &:hover:not(&--active):not(&--active-dropdown) {
+          background: theme("colors.slate.50");
         }
-        &--active-dropdown {
-          margin-bottom: theme("spacing[1.5]");
+      }
+      &:last-of-type {
+        > .side-menu__link {
+          border-bottom-left-radius: 0.6rem;
+          border-bottom-right-radius: 0.6rem;
+          border-bottom-width: 1px;
         }
-        &:hover:not(&--active) {
-          background: theme("colors.white" / 80%);
-          border-color: theme("colors.slate.200" / 80%);
-          box-shadow: 0px 2px 3px #0000000b;
+        > .side-menu__link--active-dropdown {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          margin-bottom: -1px;
+          & ~ ul {
+            > li:last-of-type {
+              > .side-menu__link {
+                border-bottom-left-radius: 0.6rem;
+                border-bottom-right-radius: 0.6rem;
+                border-bottom-width: 1px;
+              }
+              > .side-menu__link--active-dropdown {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: -1px;
+                & ~ ul {
+                  > li:last-of-type {
+                    > .side-menu__link {
+                      border-bottom-left-radius: 0.6rem;
+                      border-bottom-right-radius: 0.6rem;
+                      border-bottom-width: 1px;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
       ul {
-        padding: theme("spacing.1") 0;
-        background: theme("colors.white");
-        border-radius: 0.6rem;
-        border: 1px solid theme("colors.slate.200");
-        margin-bottom: theme("spacing.2");
         .side-menu__link {
-          margin-bottom: 0;
+          background-color: theme("colors.slate.50");
+          border-top-color: theme("colors.slate.200" / 60%);
         }
         ul {
-          margin: 0px -1px;
-          box-shadow: none;
-          border: 1px solid theme("colors.slate.200" / 80%);
+          .side-menu__link {
+            background-color: theme("colors.slate.100");
+          }
         }
       }
     }

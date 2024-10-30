@@ -4,7 +4,7 @@ import { Switch } from "@shared/ui/fields"
 
 import { SwitchVariantProps } from "./switch-variant.types"
 
-// TODO
+// TODO: add request
 
 const SwitchVariant: FC<SwitchVariantProps> = ({ id, data }) => {
   const [value, setValue] = useState(data)

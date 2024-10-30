@@ -1,45 +1,59 @@
-import { FC, useEffect, useState } from "react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { FC } from "react"
 
 import { useGeneral } from "@features/general-provider"
 
+import { api } from "@services/api"
+
+import Pagination from "@shared/ui/pagination"
 import Table from "@shared/ui/table"
 import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"
+import { isAxiosError } from "@shared/utils/error-handler"
+
+import ChevronIcon from "@assets/icons/chevron.svg"
 
 import { Cell } from "./cell"
 
 const TableEntity: FC<{ id: number }> = ({ id }) => {
   const { general } = useGeneral()
   const table = general?.tables?.find(form => form.id === id)
-  const [rows, setRows] = useState<any[]>([])
+
+  const queryClient = useQueryClient()
+  const { data, isError, error } = useQuery({
+    queryKey: ["table", table?.api_route],
+    queryFn: () => api.get<any[]>(withBackendHost(`${table?.api_route}`)),
+    select: data => data.data,
+    enabled: !!table?.api_route,
+    retry: false,
+  })
 
   const updateCell = (id: number, instance: any) => {
-    if (instance) {
-      setRows(prevRows => prevRows.map(row => (row.id === id ? { ...row, ...instance } : row)))
+    if (!data) return
+    queryClient.setQueryData(
+      ["table", table?.api_route],
+      (oldData: { data: any[] } | undefined) => {
+        if (!oldData) return
+
+        const updatedData = instance
+          ? oldData.data.map(row => (row.id === id ? { ...row, ...instance } : row))
+          : oldData.data.filter(row => row.id !== id)
+
+        return { data: updatedData }
+      },
+    )
+  }
+
+  if (isError) {
+    if (isAxiosError(error)) {
+      const message = error.response?.data.message
+      showToast(message, { type: "error" })
     } else {
-      setRows(prevRows => prevRows.filter(row => row.id !== id))
+      showToast("Не вдалось завантажити таблицю!", { type: "error" })
     }
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (table?.api_route) {
-        try {
-          const response = await fetch(withBackendHost(table.api_route))
-          const result = await response.json()
-          setRows(result)
-        } catch {
-          showToast("Не вдалось завантажити таблицю!", { type: "error" })
-        }
-      }
-    }
-
-    fetchData()
-  }, [table?.api_route])
-
-  if (!table) {
-    return null
-  }
+  if (!table || !data) return null
 
   return (
     <div className="box box--stacked space-y-8 p-5">
@@ -47,17 +61,15 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
         <Table>
           <Table.Thead>
             <Table.Tr>
-              {table.columns.map(item => {
-                return (
-                  <Table.Th key={item.id} className="whitespace-nowrap">
-                    {item.title}
-                  </Table.Th>
-                )
-              })}
+              {table.columns.map(item => (
+                <Table.Th key={item.id} className="whitespace-nowrap">
+                  {item.title}
+                </Table.Th>
+              ))}
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {rows.map(item => (
+            {data.map(item => (
               <Table.Tr key={item.id}>
                 {table.columns.map(column => (
                   <Table.Td key={column.id} className="whitespace-nowrap">
@@ -81,6 +93,35 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
           </Table.Tbody>
         </Table>
       </div>
+      {table.enable_pagination && (
+        <Pagination className="mx-auto w-fit">
+          <Pagination.Link>
+            <span className="rotate-90 *:size-4">
+              <ChevronIcon />
+            </span>
+          </Pagination.Link>
+          <Pagination.Link>
+            <span className="-rotate-90 *:size-4">
+              <ChevronIcon />
+            </span>
+          </Pagination.Link>
+          <Pagination.Link>...</Pagination.Link>
+          <Pagination.Link>1</Pagination.Link>
+          <Pagination.Link active>2</Pagination.Link>
+          <Pagination.Link>3</Pagination.Link>
+          <Pagination.Link>...</Pagination.Link>
+          <Pagination.Link>
+            <span className="rotate-90 *:size-4">
+              <ChevronIcon />
+            </span>
+          </Pagination.Link>
+          <Pagination.Link>
+            <span className="-rotate-90 *:size-4">
+              <ChevronIcon />
+            </span>
+          </Pagination.Link>
+        </Pagination>
+      )}
     </div>
   )
 }

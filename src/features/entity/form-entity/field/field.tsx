@@ -9,6 +9,8 @@ import { Input, Label, Textarea } from "@shared/ui/fields"
 import { ImageUploaderField } from "./image-uploader-field"
 import { SelectField } from "./select-field"
 
+// TODO: memo input
+
 const Field: FC<FieldEntity> = field => {
   const {
     field_name,
@@ -49,7 +51,7 @@ const Field: FC<FieldEntity> = field => {
         return (
           <Editor
             value={fieldValue}
-            onChange={value => setValue(field_name, value)}
+            onChange={value => setValue(field_name, value, { shouldDirty: true })}
             className={size}
           />
         )
@@ -82,7 +84,7 @@ const Field: FC<FieldEntity> = field => {
 
   return (
     <div>
-      <Label>{field_text}</Label>
+      <Label className="mb-2">{field_text}</Label>
       {getField()}
     </div>
   )

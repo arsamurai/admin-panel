@@ -1,13 +1,17 @@
+import { useQuery } from "@tanstack/react-query"
 import { FC, useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { useLocation } from "react-router-dom"
 
 import { useGeneral } from "@features/general-provider"
 
+import { api } from "@services/api"
+
 import Button from "@shared/ui/button"
 import { showToast } from "@shared/ui/toastify"
 import { Typography } from "@shared/ui/typography"
 import { withBackendHost } from "@shared/utils/env"
+import { isAxiosError } from "@shared/utils/error-handler"
 
 import { Field } from "./field"
 import { FormEntityProps } from "./form.types"
@@ -20,8 +24,17 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   const form = general?.[variant]?.find(form => form.id === id)
   const parsedParams = form?.api_parameters && JSON.parse(form.api_parameters)
 
+  const { data, isError, error } = useQuery({
+    queryKey: ["form", form?.route_to_fill_form, itemId],
+    queryFn: () => api.get<{ data: any }>(withBackendHost(`${form?.route_to_fill_form}${itemId}`)),
+    select: data => data.data,
+    enabled: !!form?.route_to_fill_form,
+    retry: false,
+  })
+
   const methods = useForm({
     shouldFocusError: false,
+    defaultValues: data,
   })
   const {
     reset,
@@ -77,26 +90,21 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      reset({})
-      if (form?.route_to_fill_form) {
-        try {
-          const response = await fetch(withBackendHost(`${form.route_to_fill_form}${itemId}`))
+    reset({})
 
-          if (response.ok) {
-            const result = await response.json()
-            reset(result)
-          } else {
-            showToast("Не вдалось завантажити дані!", { type: "error" })
-          }
-        } catch {
-          showToast("Не вдалось завантажити дані!", { type: "error" })
-        }
-      } else reset({})
+    if (data) reset(data)
+
+    return () => reset({})
+  }, [data, reset])
+
+  if (isError) {
+    if (isAxiosError(error)) {
+      const message = error.response?.data.message
+      showToast(message, { type: "error" })
+    } else {
+      showToast("Не вдалось завантажити дані!", { type: "error" })
     }
-
-    fetchData()
-  }, [form, itemId, reset])
+  }
 
   if (!form) {
     return null
