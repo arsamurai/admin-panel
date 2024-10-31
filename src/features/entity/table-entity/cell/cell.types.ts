@@ -12,7 +12,7 @@ export interface CellProps
     | "buttons"
   > {
   itemId: number
-  data: string | number | boolean
+  data?: string | number | boolean
   type: string
   updateCell: (id: number, instance: any) => void
 }

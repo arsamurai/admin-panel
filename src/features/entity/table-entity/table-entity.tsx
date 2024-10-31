@@ -5,7 +5,7 @@ import { useGeneral } from "@features/general-provider"
 
 import { api } from "@services/api"
 
-import Pagination from "@shared/ui/pagination"
+import Pagination from "@shared/ui/pagination2"
 import Table from "@shared/ui/table"
 import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"

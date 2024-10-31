@@ -1579,6 +1579,18 @@
   dependencies:
     "@tanstack/query-core" "5.55.4"
 
+"@tanstack/react-table@^8.20.5":
+  version "8.20.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.20.5.tgz#19987d101e1ea25ef5406dce4352cab3932449d8"
+  integrity sha512-WEHopKw3znbUZ61s9i0+i9g8drmDo6asTWbrQh8Us63DAk/M0FkmIqERew6P71HI75ksZ2Pxyuf4vvKh9rAkiA==
+  dependencies:
+    "@tanstack/table-core" "8.20.5"
+
+"@tanstack/table-core@8.20.5":
+  version "8.20.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.20.5.tgz#3974f0b090bed11243d4107283824167a395cf1d"
+  integrity sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==
+
 "@trivago/prettier-plugin-sort-imports@^4.3.0":
   version "4.3.0"
   resolved "https://registry.npmjs.org/@trivago/prettier-plugin-sort-imports/-/prettier-plugin-sort-imports-4.3.0.tgz"
@@ -1617,7 +1629,7 @@
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
 
-"@types/babel__traverse@*", "@types/babel__traverse@^7.17.1":
+"@types/babel__traverse@*":
   version "7.20.6"
   resolved "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.20.6.tgz"
   integrity sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==
@@ -1678,13 +1690,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-tag-autocomplete@^5.6.0":
-  version "5.12.6"
-  resolved "https://registry.yarnpkg.com/@types/react-tag-autocomplete/-/react-tag-autocomplete-5.12.6.tgz#40c63ac77dae4abc77a0800213bd5b987670684d"
-  integrity sha512-7TH9bghG+O3fwiyUrpriUs9wrOs744ilay+omshoH9ZzzDOSrNDoGmE0SfFtsxxOe5si93riFc3KHCptzzNQFQ==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-transition-group@^4.4.0", "@types/react-transition-group@^4.4.11":
   version "4.4.11"
   resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.11.tgz"
@@ -1699,11 +1704,6 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
-
-"@types/tabulator-tables@^6.2.3":
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/@types/tabulator-tables/-/tabulator-tables-6.2.3.tgz#f9eecd5872ea1607bdb89c4907f8e514fbe586e4"
-  integrity sha512-ZeRF/WvtwFXml/4aT7kzfkHEiwbjHZdlIsjrgqcfdmpkl9GQ9XBHY6u9BblUaHX4NUiOlBeHrQKjvai6/bQH0g==
 
 "@typescript-eslint/eslint-plugin@^8.5.0":
   version "8.5.0"
@@ -2442,11 +2442,6 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dotenv@^16.3.1:
-  version "16.4.5"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
-  integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
-
 eastasianwidth@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz"
@@ -3131,11 +3126,6 @@ hoist-non-react-statics@^3.3.1:
   dependencies:
     react-is "^16.7.0"
 
-html-attributes@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/html-attributes/-/html-attributes-1.1.0.tgz#82027a4fac7a6070ea6c18cc3886aea18d6dea09"
-  integrity sha512-reT/KK6Ju+DZqAbAn3sIkpMH+658kEsaEjpNrej2O5XSUsH5SzVHX7NGZk5RiZcVi7l+RsV+5q3C6TqM5vxsVA==
-
 human-signals@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-5.0.0.tgz"
@@ -3566,11 +3556,6 @@ lodash-es@4.17.21, lodash-es@^4.17.21:
   resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
-lodash.isplainobject@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
-  integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
-
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
@@ -3918,15 +3903,6 @@ path-type@^4.0.0:
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
-pick-react-known-prop@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/pick-react-known-prop/-/pick-react-known-prop-0.1.5.tgz#3a888f158b538ecc214ad01921054dc4148c328d"
-  integrity sha512-SnDf64AVdvqoAFpHeZUKT9kdn40Ellj84CPALRxYWqNJ6r6f44eAAT+Jtkb0Suhiw7yg5BdOFAQ25OJnjG+afw==
-  dependencies:
-    html-attributes "^1.1.0"
-    lodash.isplainobject "^4.0.6"
-    svg-attributes "^1.0.0"
-
 picocolors@^1.0.0, picocolors@^1.0.1:
   version "1.1.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.1.0.tgz"
@@ -4133,23 +4109,6 @@ react-select@^5.8.1:
     prop-types "^15.6.0"
     react-transition-group "^4.3.0"
     use-isomorphic-layout-effect "^1.1.2"
-
-react-tabulator@^0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/react-tabulator/-/react-tabulator-0.21.0.tgz#d12728f75313247f9ed4681ec66ea07e7c1d4bd8"
-  integrity sha512-CMsxG3hRDay+sXt1RBdmeslQnXLtrHN8PtM0TiN6I15pJ/xIt+x8Vt9nWPm76BD22hucMuw/RHmaoRaoA2xOMQ==
-  dependencies:
-    "@types/babel__traverse" "^7.17.1"
-    "@types/react-tag-autocomplete" "^5.6.0"
-    dotenv "^16.3.1"
-    pick-react-known-prop "^0.1.5"
-    react-tag-autocomplete "^5.7.1"
-    tabulator-tables "5.6.1"
-
-react-tag-autocomplete@^5.7.1:
-  version "5.13.1"
-  resolved "https://registry.yarnpkg.com/react-tag-autocomplete/-/react-tag-autocomplete-5.13.1.tgz#9d3376cbbf66ce8901a62355ca35fd68a58abfc8"
-  integrity sha512-ECcQnizAxw8VnEDUfCKuA2ZDQ0Fyxds3kVtE4NVAhJvBYOMMgkRNAM3UwyEXAQ0h7nnCwmIA+czJiwso07Mrqw==
 
 react-toastify@^10.0.6:
   version "10.0.6"
@@ -4588,11 +4547,6 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-svg-attributes@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/svg-attributes/-/svg-attributes-1.0.0.tgz#b5c5968f36247b7dbe3853207f2a9c68ad806bfc"
-  integrity sha512-opDCROGf0kXDKJFg0so8Ydg2jewgaWRuF/35Xxuqox54Rg12rR7pLnRaru06NfJ5WCxjUSRjT5AGcikxMmzG6g==
-
 svg-parser@^2.0.4:
   version "2.0.4"
   resolved "https://registry.npmjs.org/svg-parser/-/svg-parser-2.0.4.tgz"
@@ -4605,16 +4559,6 @@ synckit@^0.9.1:
   dependencies:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
-
-tabulator-tables@5.6.1:
-  version "5.6.1"
-  resolved "https://registry.yarnpkg.com/tabulator-tables/-/tabulator-tables-5.6.1.tgz#ffd9ca7f730f3e7ec58e7dfffc91ee58e2b7fcc9"
-  integrity sha512-DsmaZqEmlQS/NL5ZJbVtoaeYjJgofEFp+2er7+uwKerGwd/E2rZbeQgux4+Ab1dxNJcbptiX7oUiTwogOnUdgQ==
-
-tabulator-tables@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/tabulator-tables/-/tabulator-tables-6.3.0.tgz#9936a70073bd9c0025c7efa3cfd5baea93fcc716"
-  integrity sha512-gFiivoa03+NCDJ28Na3UU45nJT7sFXBsFCBtMqXz5OpsNTWrmL5ZJYA4oZtDFaVfarPqUHNgwm2PhL6DR7CQxg==
 
 tailwind-merge@^2.5.2:
   version "2.5.2"

@@ -1,15 +1,15 @@
 @import "./_tailwind.css";
 
 @import "simplebar/dist/simplebar.css";
-@import "tabulator-tables/dist/css/tabulator.css";
 
-@import "./_dm-sans.css";
-@import "./_public-sans.css";
+@import "./fonts/_dm-sans.css";
+@import "./fonts/_public-sans.css";
+@import "./fonts/_montserrat.css";
+@import "./fonts/_poppins.css";
+@import "./fonts/_inter.css";
 
 @import "./components/_global.css";
 @import "./components/_side-menu.css";
 @import "./components/_box.css";
-@import "./components/_tom-select.css";
 @import "./components/_ckeditor.css";
 @import "./components/_scrollbar-hidden.css";
-@import "./components/_tabulator.css";

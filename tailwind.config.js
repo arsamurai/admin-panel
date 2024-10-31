@@ -51,6 +51,9 @@ export default {
       fontFamily: {
         "public-sans": ["Public Sans"],
         "dm-sans": ["DM Sans"],
+        montserrat: ["Montserrat"],
+        poppins: ["Poppins"],
+        inter: ["Inter"],
       },
       backgroundImage: {
         "texture-black":
