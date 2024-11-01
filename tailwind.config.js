@@ -72,6 +72,7 @@ export default {
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require("tailwindcss-animate"),
     plugin(function ({ addBase }) {
       addBase({
         ":root": {

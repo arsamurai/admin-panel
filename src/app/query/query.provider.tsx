@@ -7,7 +7,7 @@ import { showToast } from "@shared/ui/toastify"
 const handleServerError = (error: Error) => {
   if (error instanceof AxiosError && error?.response) {
     if (error.response.status >= 500) {
-      showToast("Ой! Что-то пошло не так", { type: "error" })
+      showToast("Ой! Щось пішло не так", { type: "error" })
     }
   }
 }
@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: 1,
+      retry: false,
       staleTime: 3000,
     },
   },

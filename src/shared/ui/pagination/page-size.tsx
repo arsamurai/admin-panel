@@ -2,8 +2,7 @@ import { FC } from "react"
 
 import { cn } from "@shared/utils/cn"
 
-import { Select } from "../fields"
-import { Typography } from "../typography"
+import { Label, Select } from "../fields"
 import { PageSizeProps } from "./pagination.types"
 
 const PageSize: FC<PageSizeProps> = ({ value, options, total, onChange, className }) => {
@@ -23,7 +22,7 @@ const PageSize: FC<PageSizeProps> = ({ value, options, total, onChange, classNam
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <Typography variant="copy">Кількість:</Typography>
+      <Label>Кількість:</Label>
       <Select
         name="pageSize"
         value={{ label: value, value }}

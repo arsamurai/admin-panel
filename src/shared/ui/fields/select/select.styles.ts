@@ -1,5 +1,5 @@
 const controlStyles = {
-  base: "bg-white hover:cursor-pointer shadow-sm flex transition duration-200  ease-in-out w-full rounded-md border border-solid border-slate-300/60 px-3 py-2 text-base outline-none",
+  base: "bg-white hover:cursor-pointer shadow-sm flex transition duration-200 ease-in-out w-full rounded-md border border-solid border-slate-300/60 px-3 py-1 text-base outline-none",
   focused: "border-primary border-opacity-40 ring-4 ring-primary ring-opacity-20",
   disabled: "opacity-70 bg-slate-100",
 }

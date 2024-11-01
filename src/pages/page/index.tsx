@@ -1,6 +1,6 @@
 import { Navigate, useParams } from "react-router-dom"
 
-import { Entity } from "@features/entity"
+import { ContentEntity } from "@features/content-entity"
 import { useGeneral } from "@features/general-provider"
 
 import { ROUTES } from "@shared/constants"
@@ -21,7 +21,7 @@ const Page = () => {
   return (
     <div className="grid grid-cols-12 gap-x-6 gap-y-10">
       <div className="col-span-12">
-        <Entity variant={page.entity_type} id={page.entity_id} />
+        <ContentEntity variant={page.entity_type} id={page.entity_id} />
       </div>
     </div>
   )
