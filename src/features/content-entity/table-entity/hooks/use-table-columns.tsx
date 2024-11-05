@@ -37,6 +37,7 @@ export const useTableColumns = (
               cell: createCell(column),
               enableSorting: !!column.enable_sort,
               enableColumnFilter: !!column.enable_filter,
+              filterFn: "includesString",
             })
           : columnHelper.display({
               header: column.title,

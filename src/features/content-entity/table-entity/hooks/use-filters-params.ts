@@ -3,9 +3,9 @@ import { useSearchParams } from "react-router-dom"
 
 import { TableFilters } from "@services/table-service"
 
-const validKeys = ["page", "pageSize", "sort", "order", "query"]
+const validKeys = ["page", "perPage", "sort", "order", "filterBy", "filterValue", "query"]
 
-export const useFiltersParams = () => {
+export const useFiltersParams = (perPage: string) => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const filtersArray = Array.from(searchParams.entries())
@@ -39,25 +39,35 @@ export const useFiltersParams = () => {
     [handleParams],
   )
 
+  const handleColumnFilter = useCallback(
+    (filterBy: string, filterValue: string) => {
+      handleParams("filterBy", filterBy)
+      handleParams("filterValue", filterValue)
+    },
+    [handleParams],
+  )
+
   const handleReset = useCallback(() => {
     handleParams("page", "1")
-    handleParams("pageSize", "10")
+    handleParams("perPage", perPage)
     handleParams("sort", "")
     handleParams("order", "")
-    handleParams("search", "")
-  }, [handleParams])
+    handleParams("query", "")
+    handleParams("filterBy", "")
+    handleParams("filterValue", "")
+  }, [handleParams, perPage])
 
   return {
     filters: {
       ...cleanedFilters,
       page: cleanedFilters.page ?? "1",
-      pageSize: cleanedFilters.pageSize ?? "20",
+      perPage: cleanedFilters.perPage ?? perPage,
       sort: cleanedFilters.sort ?? "id",
       order: cleanedFilters.order ?? "ASC",
-      query: cleanedFilters.query ?? "",
     },
     onChangeParam: handleParams,
     onSort: handleSort,
+    onColumnFilter: handleColumnFilter,
     onReset: handleReset,
   }
 }

@@ -5,6 +5,7 @@ export {
   FieldTypeEnum,
   ColumnTypeEnum,
   ButtonActionTypeEnum,
+  ContentTypeEnum,
   type MenuItemEntity,
   type FieldEntity,
   type ColumnEntity,

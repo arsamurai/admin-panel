@@ -19,7 +19,7 @@ export interface ButtonEntity {
   title: string
   api_key_param: string
   api_command_name: string
-  color: string
+  color: "primary" | "secondary" | "success" | "warning" | "pending" | "danger" | "dark"
   api_route: string
   action_type: ButtonActionTypeEnum
   action?: string | number

@@ -1,9 +1,12 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { useNavigate } from "react-router-dom"
+
+import { Modal } from "@features/modal"
 
 import { ButtonActionTypeEnum } from "@services/general-service"
 
 import { ROUTES } from "@shared/constants"
+import Button from "@shared/ui/button"
 import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"
 
@@ -20,6 +23,7 @@ const TableButton: FC<TableButtonProps> = ({
   updateColumn,
 }) => {
   const navigate = useNavigate()
+  const [openDialog, setOpenDialog] = useState(false)
 
   const sendRequest = async () => {
     try {
@@ -27,6 +31,7 @@ const TableButton: FC<TableButtonProps> = ({
         method: "POST",
       })
 
+      // TODO: updateColumn
       if (response.ok) {
         const data = await response.json()
         if (updateColumn && columnId)
@@ -43,6 +48,10 @@ const TableButton: FC<TableButtonProps> = ({
     }
   }
 
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
+  }
+
   const handleClick = () => {
     switch (action_type) {
       case ButtonActionTypeEnum.SendRequest:
@@ -50,20 +59,23 @@ const TableButton: FC<TableButtonProps> = ({
       case ButtonActionTypeEnum.GoToPage:
         return navigate(`${ROUTES.PAGE.path}/${action}?${api_key_param}=${columnId}`)
       case ButtonActionTypeEnum.OpenModal:
-        return
+        return setOpenDialog(true)
       case ButtonActionTypeEnum.Offcanvas:
         return
     }
   }
 
   return (
-    <button
-      onClick={handleClick}
-      className="h-8 rounded-xl px-4 font-semibold text-white"
-      style={{ backgroundColor: color }}
-    >
-      {title}
-    </button>
+    <>
+      <Button
+        variant={color}
+        onClick={handleClick}
+        className="h-8 rounded-xl px-4 font-semibold text-white"
+      >
+        {title}
+      </Button>
+      <Modal open={openDialog} handleClose={handleCloseDialog} id={Number(action)} />
+    </>
   )
 }
 export default TableButton

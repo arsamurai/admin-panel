@@ -9,5 +9,5 @@ export {
   type ColumnEntity,
   type ButtonEntity,
 } from "./table.types"
-export type { ViewEntity } from "./view.types"
+export { ContentTypeEnum, type ViewEntity } from "./view.types"
 export type { PageEntity } from "./pages.types"

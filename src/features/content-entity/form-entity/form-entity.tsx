@@ -7,6 +7,7 @@ import { useGeneral } from "@features/general-provider"
 import { useFormQuery } from "@services/form-service"
 
 import Button from "@shared/ui/button"
+import { Loading } from "@shared/ui/loading"
 import { showToast } from "@shared/ui/toastify"
 import { Typography } from "@shared/ui/typography"
 import { withBackendHost } from "@shared/utils/env"
@@ -23,7 +24,10 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   const form = general?.[variant]?.find(form => form.id === id)
   const parsedParams = form?.api_parameters && JSON.parse(form.api_parameters)
 
-  const { data, isError, error } = useFormQuery(form?.route_to_fill_form ?? "", itemId ?? "")
+  const { data, isError, isLoading, error } = useFormQuery(
+    form?.route_to_fill_form ?? "",
+    itemId ?? "",
+  )
 
   const methods = useForm({
     shouldFocusError: false,
@@ -99,6 +103,10 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
     }
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   if (!form) {
     return null
   }
@@ -106,9 +114,6 @@ const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="box box--stacked space-y-8 p-5">
-        <Typography as="h3" variant="sectionTitle">
-          {form.title}
-        </Typography>
         {form.containers.map((container, key) => {
           return (
             <div key={key} className="space-y-3">

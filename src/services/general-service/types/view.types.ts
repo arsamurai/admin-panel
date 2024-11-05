@@ -38,7 +38,7 @@ enum ViewTypeEnum {
   TABS = "tabs",
 }
 
-enum ContentTypeEnum {
+export enum ContentTypeEnum {
   StatisticsCards = "StatisticsCards",
   CalendarCards = "CalendarCards",
   GroupedDataOutput = "GroupedDataOutput",
