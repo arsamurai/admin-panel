@@ -60,7 +60,7 @@ const Field: FC<FieldEntity> = field => {
           <SelectField
             name={field_name}
             isMulti={is_multiselect}
-            size={size}
+            className={size}
             optionsRoute={options_route ?? ""}
             routeParam={route_param ?? ""}
           />

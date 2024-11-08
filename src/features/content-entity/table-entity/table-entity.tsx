@@ -21,6 +21,7 @@ import { PageSize, Pagination } from "@shared/ui/pagination"
 import { Typography } from "@shared/ui/typography"
 import { cn } from "@shared/utils/cn"
 
+import { Filter } from "./filter"
 import { useFiltersParams } from "./hooks/use-filters-params"
 import { useTableColumns } from "./hooks/use-table-columns"
 import { TableButton } from "./table-button"
@@ -75,7 +76,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
     onSortingChange: updaterOrValue => {
       if (typeof updaterOrValue === "function") {
         const newSortingState = updaterOrValue(sorting)
-        newSortingState.map(item => {
+        newSortingState.forEach(item => {
           onSort(item.id, item.desc ? "DESC" : "ASC")
         })
       }
@@ -84,7 +85,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
       if (typeof updaterOrValue === "function") {
         const newColumnFiltersState = updaterOrValue(columnFilters)
         if (newColumnFiltersState.length) {
-          newColumnFiltersState.map(item =>
+          newColumnFiltersState.forEach(item =>
             onColumnFilter(item.id, item.value ? (item.value as string) : ""),
           )
         } else {
@@ -129,7 +130,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
         <div className="flex flex-wrap items-center gap-5">
           {table.enable_search && (
             <div className="flex items-center gap-5">
-              <Label className="whitespace-nowrap">Пошук:</Label>
+              <Label className="whitespace-nowrap">Поиск:</Label>
               <Input
                 name="search"
                 value={filters?.query ?? ""}
@@ -137,7 +138,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
                   onChangeParam("query", e.target.value)
                   onChangeParam("page", "1")
                 }}
-                placeholder="Від двох символів..."
+                placeholder="От двух символов..."
               />
             </div>
           )}
@@ -156,11 +157,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
         </Button>
       </div>
       <div className="scrollbar-hidden overflow-x-auto">
-        <table
-          className={cn("w-full min-w-[1050px]", {
-            "pointer-events-none cursor-wait opacity-50": isPlaceholderData,
-          })}
-        >
+        <table className="w-full min-w-[1200px]">
           <thead>
             {tableConfig.getHeaderGroups().map(headerGroup => (
               <tr
@@ -168,7 +165,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
                 className="border-y border-solid border-slate-200/60 bg-slate-50 font-medium text-slate-500"
               >
                 {headerGroup.headers.map(header => (
-                  <th key={header.id} className="m-0 w-1/6 p-0">
+                  <th key={header.id} className="m-0 p-0">
                     {header.isPlaceholder ? null : (
                       <>
                         <div
@@ -192,12 +189,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
                         </div>
                         {header.column.getCanFilter() ? (
                           <div className="p-2">
-                            <Input
-                              type="text"
-                              value={(header.column.getFilterValue() ?? "") as string}
-                              onChange={e => header.column.setFilterValue(e.target.value)}
-                              placeholder="Пошук..."
-                            />
+                            <Filter column={header.column} />
                           </div>
                         ) : null}
                       </>
@@ -207,7 +199,9 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
               </tr>
             ))}
           </thead>
-          <tbody>
+          <tbody
+            className={cn({ "pointer-events-none cursor-wait opacity-50": isPlaceholderData })}
+          >
             {tableConfig.getRowModel().rows.map(row => (
               <tr
                 key={row.id}
@@ -219,7 +213,7 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
                 )}
               >
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="w-1/6 px-4 py-5 text-sm">
+                  <td key={cell.id} className="px-4 py-5 text-sm">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

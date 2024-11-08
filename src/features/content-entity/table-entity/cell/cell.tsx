@@ -26,7 +26,12 @@ export const Cell: FC<CellProps> = ({
         </a>
       )
     case ColumnTypeEnum.Badge:
-      return <BadgeVariant api_route={api_route ?? ""} />
+      return (
+        <BadgeVariant
+          api_object_key={api_object_key ?? ""}
+          data={typeof data === "number" ? data : 0}
+        />
+      )
     case ColumnTypeEnum.Switch:
       return (
         <SwitchVariant

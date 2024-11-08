@@ -1,3 +1,4 @@
 export interface BadgeVariantProps {
-  api_route: string
+  api_object_key: string
+  data: number
 }

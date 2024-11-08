@@ -8,7 +8,8 @@ export const badgeVariants = cva("rounded-full ", {
       success: "text-white bg-success",
       warning: "text-white bg-warning",
       danger: "text-white bg-danger",
-      gray: "bg-slate-100 text-slate-500",
+      dark: "text-white bg-dark",
+      info: "bg-slate-100 text-slate-500",
     },
     size: {
       sm: "px-1 text-xs",

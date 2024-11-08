@@ -29,6 +29,7 @@ const PageSize: FC<PageSizeProps> = ({ value, options, total, onChange, classNam
         onChange={option => option?.value && onChange(option.value)}
         options={filteredPageSizeOptions}
         defaultValue={{ label: options[0], value: options[0] }}
+        isSearchable={false}
       />
     </div>
   )

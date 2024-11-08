@@ -1,7 +1,7 @@
 export interface SelectFieldProps {
   name: string
   isMulti?: boolean
-  size: string
+  className: string
   optionsRoute: string
   routeParam: string
 }

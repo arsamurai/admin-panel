@@ -7,7 +7,13 @@ import { Select, SelectOption } from "@shared/ui/fields"
 
 import { SelectFieldProps } from "./select-field.types"
 
-const SelectField: FC<SelectFieldProps> = ({ name, isMulti, size, optionsRoute, routeParam }) => {
+const SelectField: FC<SelectFieldProps> = ({
+  name,
+  isMulti,
+  className,
+  optionsRoute,
+  routeParam,
+}) => {
   const { control } = useFormContext()
   const parsedParams = JSON.parse(routeParam)
   const queryString = new URLSearchParams(parsedParams.params).toString()
@@ -36,7 +42,7 @@ const SelectField: FC<SelectFieldProps> = ({ name, isMulti, size, optionsRoute, 
           }}
           isMulti={isMulti}
           isLoading={isLoading}
-          className={size}
+          className={className}
         />
       )}
     />

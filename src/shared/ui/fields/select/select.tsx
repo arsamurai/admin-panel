@@ -72,7 +72,8 @@ function Select<
         menuPortal: base => ({ ...base, zIndex: 49 }),
         input: base => ({ ...base, "input[type='text']:focus": { boxShadow: "none" } }),
       }}
-      menuPortalTarget={document.body}
+      menuPosition="fixed"
+      placeholder={props.placeholder ?? "Выберите..."}
       {...props}
     />
   )

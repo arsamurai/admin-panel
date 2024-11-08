@@ -1,7 +1,7 @@
 import { CellContext, createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 
-import { ColumnEntity } from "@services/general-service"
+import { ColumnEntity, ColumnTypeEnum } from "@services/general-service"
 
 import { Cell } from "../cell"
 
@@ -38,6 +38,9 @@ export const useTableColumns = (
               enableSorting: !!column.enable_sort,
               enableColumnFilter: !!column.enable_filter,
               filterFn: "includesString",
+              meta: {
+                filterVariant: column.column_type === ColumnTypeEnum.Badge ? "select" : "text",
+              },
             })
           : columnHelper.display({
               header: column.title,

@@ -1,7 +1,7 @@
 import { FC } from "react"
 
-import { ContentEntity } from "@features/content-entity"
 import { useGeneral } from "@features/general-provider"
+import { View } from "@features/view"
 
 import Dialog from "@shared/ui/dialog"
 
@@ -17,7 +17,7 @@ const Modal: FC<ModalProps> = ({ open, handleClose, id }) => {
 
   return (
     <Dialog open={open} handleClose={handleClose} title={modal.title}>
-      <ContentEntity variant={modal.entity_type} id={modal.entity_id} />
+      <View id={modal.entity_id} />
     </Dialog>
   )
 }

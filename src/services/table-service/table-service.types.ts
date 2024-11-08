@@ -1,8 +1,16 @@
 // RESPONSES
 export interface TableResponse {
   data: any[]
-  config: any
+  config: TableConfig
   pagination: Pagination
+}
+
+export interface TableConfig {
+  badges: {
+    [key: string]: {
+      [key: number]: BadgeEntity
+    }
+  }
 }
 
 // TYPES
@@ -14,6 +22,11 @@ export interface TableFilters {
   order?: string
   filterBy?: string
   filterValue?: string
+}
+
+interface BadgeEntity {
+  name: string
+  type: "primary" | "otline" | "success" | "warning" | "danger" | "dark" | "info"
 }
 
 interface Pagination {
