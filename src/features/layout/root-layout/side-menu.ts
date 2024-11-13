@@ -53,14 +53,11 @@ const nestedMenu = (menu: MenuItemEntity[], pageId: number) => {
   return formattedMenu
 }
 
-const linkTo = (menu: FormattedMenu, navigate: NavigateFunction) => {
+const linkTo = (menu: FormattedMenu, navigate: NavigateFunction, pageId: number) => {
   if (menu.children.length) {
-    menu.activeDropdown = !menu.activeDropdown
-  } else {
-    if (menu.comment.page_id !== undefined) {
-      navigate(`${ROUTES.PAGE.path}/${menu.comment.page_id}`)
-    }
-  }
+    if (menu.comment.page_id !== pageId) navigate(`${ROUTES.PAGE.path}/${menu.comment.page_id}`)
+    else menu.activeDropdown = !menu.activeDropdown
+  } else navigate(`${ROUTES.PAGE.path}/${menu.comment.page_id}`)
 }
 
 const enter = (el: HTMLElement) => {

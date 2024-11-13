@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority"
 
-export const badgeVariants = cva("rounded-full ", {
+export const badgeVariants = cva("rounded-full whitespace-nowrap", {
   variants: {
     variant: {
       primary: "bg-primary text-white",

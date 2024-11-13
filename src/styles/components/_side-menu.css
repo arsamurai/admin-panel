@@ -129,10 +129,16 @@
     &--active {
       .side-menu__link__icon {
         opacity: theme("opacity.100");
+        color: theme("colors.theme.1");
       }
       .side-menu__link__title {
         color: theme("colors.theme.1");
         font-weight: theme("fontWeight.medium");
+      }
+    }
+    &--active-dropdown {
+      .side-menu__link__chevron {
+        transform: rotate(180deg);
       }
     }
     &__icon {
@@ -163,6 +169,7 @@
     }
     &__chevron {
       margin-left: auto;
+      transform: rotate(0deg);
     }
   }
   ul.scrollable {

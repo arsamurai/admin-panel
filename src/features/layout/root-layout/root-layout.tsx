@@ -5,6 +5,8 @@ import SimpleBar from "simplebar"
 
 import { useGeneral } from "@features/general-provider"
 
+import { ROUTES } from "@shared/constants"
+import { getSvgById } from "@shared/ui/icons"
 import { Loading } from "@shared/ui/loading"
 import { Typography } from "@shared/ui/typography"
 import { cn } from "@shared/utils/cn"
@@ -14,7 +16,6 @@ import CloseIcon from "@assets/icons/close.svg"
 import HomeIcon from "@assets/icons/home.svg"
 import ZoomIcon from "@assets/icons/zoom.svg"
 
-import { getSvgById } from "./menu-icons"
 import { FormattedMenu, enter, leave, linkTo, nestedMenu } from "./side-menu"
 
 const RootLayout = () => {
@@ -75,7 +76,7 @@ const RootLayout = () => {
               }}
             >
               <a
-                href=""
+                href={ROUTES.ROOT.path}
                 className="flex items-center transition-[margin] group-[.side-menu--collapsed.side-menu--on-hover]:xl:ml-0 group-[.side-menu--collapsed]:xl:ml-2"
               >
                 <div className="flex h-[34px] w-[34px] items-center justify-center rounded-lg bg-white/10 transition-transform ease-in-out group-[.side-menu--collapsed.side-menu--on-hover]:xl:-rotate-180">
@@ -174,14 +175,14 @@ const RootLayout = () => {
                         href=""
                         className={cn([
                           "side-menu__link",
-                          { "side-menu__link--active": menu.active },
+                          { "side-menu__link--active": menu.active || menu.activeDropdown },
                           {
                             "side-menu__link--active-dropdown": menu.activeDropdown,
                           },
                         ])}
                         onClick={(event: React.MouseEvent) => {
                           event.preventDefault()
-                          linkTo(menu, navigate)
+                          linkTo(menu, navigate, Number(id))
                           setFormattedMenu([...formattedMenu])
                         }}
                       >
@@ -190,7 +191,7 @@ const RootLayout = () => {
                         </span>
                         <div className="side-menu__link__title">{menu.comment.title}</div>
                         {!!menu.children.length && (
-                          <span className="side-menu__link__chevron *:size-5 *:fill-black">
+                          <span className="side-menu__link__chevron *:size-5 *:fill-black/70">
                             <ChevronIcon />
                           </span>
                         )}
@@ -214,19 +215,22 @@ const RootLayout = () => {
                                   href="#"
                                   className={cn([
                                     "side-menu__link",
-                                    { "side-menu__link--active": children.active },
+                                    {
+                                      "side-menu__link--active":
+                                        children.active || children.activeDropdown,
+                                    },
                                     {
                                       "side-menu__link--active-dropdown": children.activeDropdown,
                                     },
                                   ])}
                                   onClick={(event: React.MouseEvent) => {
                                     event.preventDefault()
-                                    linkTo(children, navigate)
+                                    linkTo(children, navigate, Number(id))
                                     setFormattedMenu([...formattedMenu])
                                   }}
                                 >
                                   <span className="side-menu__link__icon *:size-5">
-                                    {getSvgById(menu.comment.icon)}
+                                    {getSvgById(children.comment.icon)}
                                   </span>
                                   <div className="side-menu__link__title">
                                     {children.comment.title}
@@ -268,7 +272,7 @@ const RootLayout = () => {
                                             ])}
                                             onClick={(event: React.MouseEvent) => {
                                               event.preventDefault()
-                                              linkTo(lastChildren, navigate)
+                                              linkTo(lastChildren, navigate, Number(id))
                                               setFormattedMenu([...formattedMenu])
                                             }}
                                           >

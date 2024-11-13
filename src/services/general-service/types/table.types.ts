@@ -2,6 +2,7 @@ export interface TableEntity {
   id: number
   title: string
   unique_id: string
+  passed_parameters?: string // is not used
   api_route: string
   per_page: number
   query_fields: QueryFieldsEnum[]

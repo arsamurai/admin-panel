@@ -63,10 +63,7 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 DialogHeader.displayName = "DialogHeader"
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:gap-x-2", className)}
-    {...props}
-  />
+  <div className={cn("flex flex-col gap-2 sm:flex-row", className)} {...props} />
 )
 DialogFooter.displayName = "DialogFooter"
 
@@ -76,11 +73,19 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-xl font-semibold leading-none tracking-tight", className)}
+    className={cn("text-xl font-semibold tracking-tight", className)}
     {...props}
   />
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
+
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description ref={ref} className={cn("text-sm", className)} {...props} />
+))
+DialogDescription.displayName = DialogPrimitive.Description.displayName
 
 export {
   DialogWrapper,
@@ -92,4 +97,5 @@ export {
   DialogHeader,
   DialogFooter,
   DialogTitle,
+  DialogDescription,
 }

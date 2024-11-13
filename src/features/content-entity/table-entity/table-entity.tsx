@@ -4,7 +4,6 @@ import {
   SortingState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -28,7 +27,7 @@ import { TableButton } from "./table-button"
 
 const TableEntity: FC<{ id: number }> = ({ id }) => {
   const { general } = useGeneral()
-  const table = general?.tables?.find(form => form.id === id)
+  const table = general?.tables?.find(table => table.id === id)
   const { filters, onChangeParam, onSort, onColumnFilter, onReset } = useFiltersParams(
     String(table?.per_page),
   )
@@ -95,7 +94,6 @@ const TableEntity: FC<{ id: number }> = ({ id }) => {
     },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     manualPagination: true,
     enableSortingRemoval: false,
     maxMultiSortColCount: 1,

@@ -8,10 +8,16 @@ export const useUpdateColumn = (params: TableFilters, api_route: string) => {
 
   const filters = {
     ...params,
-    query: !!params.query && params.query.trim().length >= 2 ? params.query : "",
+    query: !!params.query && params.query.trim().length >= 2 && params.query,
+    filterValue: params.filterBy && params.filterValue,
+    filterBy: params.filterValue && params.filterBy,
   }
 
-  const queryString = new URLSearchParams(filters).toString()
+  const cleanedFilters: { [k: string]: string } = Object.fromEntries(
+    Object.entries(filters).filter(([, value]) => !!value),
+  ) as { [k: string]: string }
+
+  const queryString = new URLSearchParams(cleanedFilters).toString()
 
   const updateColumn = (id: number, instance: any) => {
     queryClient.setQueryData(

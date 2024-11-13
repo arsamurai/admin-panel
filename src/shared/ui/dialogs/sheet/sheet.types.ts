@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-export interface DialogProps {
+export interface SheetProps {
   open: boolean
   handleClose: () => void
   title: string

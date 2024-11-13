@@ -1,12 +1,15 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Modal } from "@features/modal"
+import { Offcanvas } from "@features/offcanvas"
 
 import { ButtonActionTypeEnum } from "@services/general-service"
 
 import { ROUTES } from "@shared/constants"
+import { useBoolean, useLocalStorage } from "@shared/hooks"
 import Button from "@shared/ui/button"
+import { AlertDialog } from "@shared/ui/dialogs"
 import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"
 
@@ -19,11 +22,16 @@ const TableButton: FC<TableButtonProps> = ({
   action_type,
   api_route,
   action,
+  alert_message,
+  show_alert,
   columnId,
   updateColumn,
 }) => {
   const navigate = useNavigate()
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openModal, setOpenModal] = useBoolean(false)
+  const [openOffcanvas, setOpenOffcanvas] = useBoolean(false)
+  const [openAlert, setOpenAlert] = useBoolean(false)
+  const [, setColumnId] = useLocalStorage<number>("column-id")
 
   const sendRequest = async () => {
     try {
@@ -31,7 +39,6 @@ const TableButton: FC<TableButtonProps> = ({
         method: "POST",
       })
 
-      // TODO: updateColumn
       if (response.ok) {
         const data = await response.json()
         if (updateColumn && columnId)
@@ -48,21 +55,46 @@ const TableButton: FC<TableButtonProps> = ({
     }
   }
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
-
-  const handleClick = () => {
+  const handleOk = () => {
     switch (action_type) {
       case ButtonActionTypeEnum.SendRequest:
         return sendRequest()
       case ButtonActionTypeEnum.GoToPage:
-        return navigate(`${ROUTES.PAGE.path}/${action}?${api_key_param}=${columnId}`)
-      case ButtonActionTypeEnum.OpenModal:
-        return setOpenDialog(true)
-      case ButtonActionTypeEnum.Offcanvas:
+        if (api_key_param && columnId)
+          navigate(`${ROUTES.PAGE.path}/${action}?${api_key_param}=${columnId}`)
+        else {
+          navigate(`${ROUTES.PAGE.path}/${action}`)
+        }
         return
+      case ButtonActionTypeEnum.OpenModal:
+        if (api_key_param && columnId) {
+          setColumnId(columnId)
+        }
+        return setOpenModal.on()
+      case ButtonActionTypeEnum.Offcanvas:
+        if (api_key_param && columnId) {
+          setColumnId(columnId)
+        }
+        return setOpenOffcanvas.on()
     }
+  }
+
+  const handleClick = () => {
+    if (show_alert) {
+      setOpenAlert.on()
+    } else {
+      handleOk()
+    }
+  }
+
+  const handleCloseModal = () => {
+    setOpenModal.off()
+    setColumnId(undefined)
+  }
+
+  const handleCloseOffcanvas = () => {
+    setOpenOffcanvas.off()
+    setColumnId(undefined)
   }
 
   return (
@@ -74,8 +106,16 @@ const TableButton: FC<TableButtonProps> = ({
       >
         {title}
       </Button>
-      <Modal open={openDialog} handleClose={handleCloseDialog} id={Number(action)} />
+      <AlertDialog
+        open={openAlert}
+        handleClose={setOpenAlert.off}
+        handleOk={handleOk}
+        text={alert_message ?? ""}
+      />
+      <Modal open={openModal} handleClose={handleCloseModal} id={Number(action)} />
+      <Offcanvas open={openOffcanvas} handleClose={handleCloseOffcanvas} id={Number(action)} />
     </>
   )
 }
+
 export default TableButton

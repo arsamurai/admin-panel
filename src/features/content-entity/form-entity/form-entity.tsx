@@ -6,6 +6,7 @@ import { useGeneral } from "@features/general-provider"
 
 import { useFormQuery } from "@services/form-service"
 
+import { useLocalStorage } from "@shared/hooks"
 import Button from "@shared/ui/button"
 import { Loading } from "@shared/ui/loading"
 import { showToast } from "@shared/ui/toastify"
@@ -19,7 +20,8 @@ import { FormEntityProps } from "./form.types"
 const FormEntity: FC<FormEntityProps> = ({ variant, id }) => {
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
-  const itemId = searchParams.get("id")
+  const [columnId] = useLocalStorage<number>("column-id")
+  const itemId = searchParams.get("id") || String(columnId)
   const { general } = useGeneral()
   const form = general?.[variant]?.find(form => form.id === id)
   const parsedParams = form?.api_parameters && JSON.parse(form.api_parameters)
