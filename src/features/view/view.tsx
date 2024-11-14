@@ -1,4 +1,5 @@
 import { FC } from "react"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
 import { ContentEntity } from "@features/content-entity"
 import { useGeneral } from "@features/general-provider"
@@ -10,6 +11,8 @@ import { cn } from "@shared/utils/cn"
 
 const View: FC<{ id: number }> = ({ id }) => {
   const { general, isLoading } = useGeneral()
+  const { hash } = useLocation()
+  const navigate = useNavigate()
   const view = general?.views?.find(page => page.id === Number(id))
 
   const getViewContent = () => {
@@ -24,25 +27,31 @@ const View: FC<{ id: number }> = ({ id }) => {
       })
     } else if (view?.tabs?.length) {
       return (
-        <Tabs defaultValue={String(view.tabs[0].id)}>
-          <div className="mb-5">
-            <TabsList>
-              {view.tabs.map(item => (
-                <TabsTrigger key={item.id} value={String(item.id)} className="flex gap-1">
-                  <span className="*:size-5">{getSvgById(item.icon)}</span>
-                  <span>{item.title}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
+        <Tabs value={hash}>
+          <TabsList>
+            {view.tabs.map(item => (
+              <TabsTrigger
+                key={item.id}
+                value={item.tab_url}
+                onClick={() => navigate(item.tab_url)}
+              >
+                <span className="*:size-5">{getSvgById(item.icon)}</span>
+                <span>{item.title}</span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
           {view.tabs.map(item => (
-            <TabsContent key={item.id} value={String(item.id)}>
+            <TabsContent key={item.id} value={item.tab_url}>
               <View id={Number(item.entity_id)} />
             </TabsContent>
           ))}
         </Tabs>
       )
     } else return null
+  }
+
+  if (view?.tabs?.length && !hash) {
+    return <Navigate to={view?.tabs?.[0].tab_url ?? ""} replace />
   }
 
   if (isLoading) {

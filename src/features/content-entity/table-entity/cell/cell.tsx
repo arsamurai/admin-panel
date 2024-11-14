@@ -15,13 +15,14 @@ export const Cell: FC<CellProps> = ({
   api_object_key,
   buttons,
   updateColumn,
+  page,
 }) => {
   switch (type) {
     case ColumnTypeEnum.Text:
       return <p>{data}</p>
     case ColumnTypeEnum.Link:
       return (
-        <a href="#" className="text-blue-400 underline">
+        <a href={page} target="_blank" rel="noreferrer" className="text-blue-400 underline">
           {data}
         </a>
       )

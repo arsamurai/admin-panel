@@ -1,11 +1,12 @@
 import { useCallback } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useLocation, useSearchParams } from "react-router-dom"
 
 import { TableFilters } from "@services/table-service"
 
 const validKeys = ["page", "perPage", "sort", "order", "filterBy", "filterValue", "query"]
 
 export const useFiltersParams = (perPage: string) => {
+  const { hash } = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const filtersArray = Array.from(searchParams.entries())
@@ -27,8 +28,11 @@ export const useFiltersParams = (perPage: string) => {
         searchParams.delete(key)
       }
       setSearchParams(searchParams)
+      if (hash) {
+        window.location.hash = hash
+      }
     },
-    [setSearchParams, searchParams],
+    [setSearchParams, searchParams, hash],
   )
 
   const handleSort = useCallback(
