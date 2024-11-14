@@ -6,7 +6,10 @@ export const ROUTES = {
   ROOT: {
     path: "/",
   },
+  404: {
+    path: "/404",
+  },
   PAGE: {
-    path: "/page",
+    path: "/:path*",
   },
 } satisfies Record<string, RouterParams>

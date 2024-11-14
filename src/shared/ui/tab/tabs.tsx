@@ -19,7 +19,7 @@ const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
 >(({ className, ...props }, ref) => (
-  <div className="--h-fit w-full xl:sticky xl:top-24 xl:max-w-64">
+  <div className="h-fit w-full xl:sticky xl:top-24 xl:max-w-64">
     <TabsPrimitive.List
       ref={ref}
       className={cn("box box--stacked rounded-lg px-4 py-2", className)}

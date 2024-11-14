@@ -1,5 +1,5 @@
 import { createRef, useEffect, useState } from "react"
-import { Outlet, useNavigate, useParams } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { Transition } from "react-transition-group"
 import SimpleBar from "simplebar"
 
@@ -20,9 +20,9 @@ import { FormattedMenu, enter, leave, linkTo, nestedMenu } from "./side-menu"
 
 const RootLayout = () => {
   const { general, isLoading } = useGeneral()
-  const { id } = useParams()
-  const page = general?.pages?.find(page => page.id === Number(id))
-  const pageName = isLoading ? "Завантаження..." : (page?.title ?? "Головна")
+  const { pathname } = useLocation()
+  const page = general?.pages?.find(page => page.route === pathname)
+  const pageName = isLoading ? "Загрузка..." : page?.title
   const [compactMenuOnHover, setCompactMenuOnHover] = useState(false)
   const [activeMobileMenu, setActiveMobileMenu] = useState(false)
   const navigate = useNavigate()
@@ -40,11 +40,14 @@ const RootLayout = () => {
     if (scrollableRef.current) {
       new SimpleBar(scrollableRef.current)
     }
+
     if (general?.menu) {
-      setFormattedMenu(nestedMenu(general?.menu, Number(id)))
+      setFormattedMenu(nestedMenu(general?.menu, page?.id ?? 0))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, general?.menu])
+  }, [general?.menu, page?.id])
+
+  // if (!general) return null
 
   return (
     <>
@@ -182,7 +185,7 @@ const RootLayout = () => {
                         ])}
                         onClick={(event: React.MouseEvent) => {
                           event.preventDefault()
-                          linkTo(menu, navigate, Number(id))
+                          linkTo(menu, navigate, general?.pages ?? [], pathname)
                           setFormattedMenu([...formattedMenu])
                         }}
                       >
@@ -225,7 +228,7 @@ const RootLayout = () => {
                                   ])}
                                   onClick={(event: React.MouseEvent) => {
                                     event.preventDefault()
-                                    linkTo(children, navigate, Number(id))
+                                    linkTo(children, navigate, general?.pages ?? [], pathname)
                                     setFormattedMenu([...formattedMenu])
                                   }}
                                 >
@@ -272,7 +275,12 @@ const RootLayout = () => {
                                             ])}
                                             onClick={(event: React.MouseEvent) => {
                                               event.preventDefault()
-                                              linkTo(lastChildren, navigate, Number(id))
+                                              linkTo(
+                                                lastChildren,
+                                                navigate,
+                                                general?.pages ?? [],
+                                                pathname,
+                                              )
                                               setFormattedMenu([...formattedMenu])
                                             }}
                                           >

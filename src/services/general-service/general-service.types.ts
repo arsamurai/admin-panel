@@ -13,12 +13,12 @@ export type GeneralResponse = { data: GeneralEntity }
 
 // TYPES
 export interface GeneralEntity {
-  cleanForms?: FormEntity[]
-  forms?: FormEntity[]
-  menu?: MenuItemEntity[]
-  modals?: ModalEntity[]
-  offcanvas?: OffcanvasEntity[]
-  tables?: TableEntity[]
-  views?: ViewEntity[]
-  pages?: PageEntity[]
+  cleanForms: FormEntity[]
+  forms: FormEntity[]
+  menu: MenuItemEntity[]
+  modals: ModalEntity[]
+  offcanvas: OffcanvasEntity[]
+  tables: TableEntity[]
+  views: ViewEntity[]
+  pages: PageEntity[]
 }

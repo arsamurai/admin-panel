@@ -1,4 +1,4 @@
-import { MainPage, Page } from "@pages"
+import { MainPage, NotFoundPage, Page } from "@pages"
 import { createBrowserRouter } from "react-router-dom"
 
 import { GeneralProvider } from "@features/general-provider"
@@ -18,7 +18,11 @@ export const router = createBrowserRouter([
             element: <MainPage />,
           },
           {
-            path: ROUTES.PAGE.path + "/:id",
+            path: ROUTES[404].path,
+            element: <NotFoundPage />,
+          },
+          {
+            path: ROUTES.PAGE.path,
             element: <Page />,
           },
         ],

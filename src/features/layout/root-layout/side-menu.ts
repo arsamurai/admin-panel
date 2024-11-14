@@ -1,8 +1,7 @@
 import { NavigateFunction } from "react-router-dom"
 
-import { MenuItemEntity } from "@services/general-service"
+import { MenuItemEntity, PageEntity } from "@services/general-service"
 
-import { ROUTES } from "@shared/constants"
 import { slideDown, slideUp } from "@shared/utils/helpers"
 
 export interface FormattedMenu extends MenuItemEntity {
@@ -53,11 +52,18 @@ const nestedMenu = (menu: MenuItemEntity[], pageId: number) => {
   return formattedMenu
 }
 
-const linkTo = (menu: FormattedMenu, navigate: NavigateFunction, pageId: number) => {
+const linkTo = (
+  menu: FormattedMenu,
+  navigate: NavigateFunction,
+  pages: PageEntity[],
+  currentPage: string,
+) => {
+  const page = pages.findLast(item => item.id === menu.comment.page_id)
+
   if (menu.children.length) {
-    if (menu.comment.page_id !== pageId) navigate(`${ROUTES.PAGE.path}/${menu.comment.page_id}`)
+    if (page?.route !== currentPage) navigate(`${page?.route}`)
     else menu.activeDropdown = !menu.activeDropdown
-  } else navigate(`${ROUTES.PAGE.path}/${menu.comment.page_id}`)
+  } else navigate(`${page?.route}`)
 }
 
 const enter = (el: HTMLElement) => {

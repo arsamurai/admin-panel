@@ -10,4 +10,5 @@ export {
   type FieldEntity,
   type ColumnEntity,
   type ButtonEntity,
+  type PageEntity,
 } from "./types"

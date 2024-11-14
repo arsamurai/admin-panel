@@ -1,4 +1,4 @@
-import { Navigate, useParams } from "react-router-dom"
+import { Navigate, useLocation } from "react-router-dom"
 
 import { useGeneral } from "@features/general-provider"
 import { View } from "@features/view"
@@ -6,16 +6,16 @@ import { View } from "@features/view"
 import { ROUTES } from "@shared/constants"
 
 const Page = () => {
-  const { id } = useParams()
+  const { pathname } = useLocation()
   const { general, isLoading } = useGeneral()
-  const page = general?.pages?.find(page => page.id === Number(id))
+  const page = general?.pages?.find(page => page.route === pathname)
 
   if (isLoading) {
     return null
   }
 
   if (!page) {
-    return <Navigate to={ROUTES.ROOT.path} />
+    return <Navigate to={ROUTES[404].path} />
   }
 
   return (
