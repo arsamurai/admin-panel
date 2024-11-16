@@ -1,7 +1,8 @@
 import { FC } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
-import { ContentEntity } from "@features/content-entity"
+import { ContentEntity } from "@pages/page/components/content-entity"
+
 import { useGeneral } from "@features/general-provider"
 
 import { getSvgById } from "@shared/ui/icons"

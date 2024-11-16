@@ -1,10 +1,10 @@
 import { FC } from "react"
 
 import { useGeneral } from "@features/general-provider"
-import { View } from "@features/view"
 
 import { Dialog } from "@shared/ui/dialogs"
 
+import { View } from "../view"
 import { ModalProps } from "./modal.types"
 
 const Modal: FC<ModalProps> = ({ open, handleClose, id }) => {

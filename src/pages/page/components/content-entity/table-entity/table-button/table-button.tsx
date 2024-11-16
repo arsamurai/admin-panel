@@ -1,9 +1,6 @@
 import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { Modal } from "@features/modal"
-import { Offcanvas } from "@features/offcanvas"
-
 import { ButtonActionTypeEnum } from "@services/general-service"
 
 import { ROUTES } from "@shared/constants"
@@ -13,6 +10,8 @@ import { AlertDialog } from "@shared/ui/dialogs"
 import { showToast } from "@shared/ui/toastify"
 import { withBackendHost } from "@shared/utils/env"
 
+import { Modal } from "../../../modal"
+import { Offcanvas } from "../../../offcanvas"
 import { TableButtonProps } from "./table-button.types"
 
 const TableButton: FC<TableButtonProps> = ({

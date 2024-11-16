@@ -1,9 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom"
 
 import { useGeneral } from "@features/general-provider"
-import { View } from "@features/view"
 
 import { ROUTES } from "@shared/constants"
+
+import { View } from "./components/view"
 
 const Page = () => {
   const { pathname } = useLocation()

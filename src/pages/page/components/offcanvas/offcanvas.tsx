@@ -1,10 +1,10 @@
 import { FC } from "react"
 
 import { useGeneral } from "@features/general-provider"
-import { View } from "@features/view"
 
 import { Sheet } from "@shared/ui/dialogs"
 
+import { View } from "../view"
 import { OffcanvasProps } from "./offcanvas.types"
 
 const Offcanvas: FC<OffcanvasProps> = ({ open, handleClose, id }) => {
