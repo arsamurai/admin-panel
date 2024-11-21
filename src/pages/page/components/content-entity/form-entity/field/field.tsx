@@ -7,6 +7,7 @@ import Editor from "@shared/ui/editor"
 import { Input, Label, Textarea } from "@shared/ui/fields"
 
 import { ImageUploaderField } from "./image-uploader-field"
+import { MultiInputField } from "./multi-input-field"
 import { SelectField } from "./select-field"
 
 // TODO: memo input
@@ -39,6 +40,16 @@ const Field: FC<FieldEntity> = field => {
         return (
           <Input
             {...register(field_name)}
+            placeholder={placeholder}
+            className={size}
+            required={!!validators?.[0]}
+            maxLength={validators?.[1] ? 50 : undefined}
+          />
+        )
+      case FieldTypeEnum.MultiInput:
+        return (
+          <MultiInputField
+            name={field_name}
             placeholder={placeholder}
             className={size}
             required={!!validators?.[0]}

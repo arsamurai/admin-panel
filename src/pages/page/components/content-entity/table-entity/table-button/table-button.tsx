@@ -1,9 +1,10 @@
 import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
+import { useGeneral } from "@features/general-provider"
+
 import { ButtonActionTypeEnum } from "@services/general-service"
 
-import { ROUTES } from "@shared/constants"
 import { useBoolean, useLocalStorage } from "@shared/hooks"
 import Button from "@shared/ui/button"
 import { AlertDialog } from "@shared/ui/dialogs"
@@ -27,6 +28,8 @@ const TableButton: FC<TableButtonProps> = ({
   updateColumn,
 }) => {
   const navigate = useNavigate()
+  const { general } = useGeneral()
+  const page = general?.pages?.find(page => page.id === Number(action))
   const [openModal, setOpenModal] = useBoolean(false)
   const [openOffcanvas, setOpenOffcanvas] = useBoolean(false)
   const [openAlert, setOpenAlert] = useBoolean(false)
@@ -60,9 +63,9 @@ const TableButton: FC<TableButtonProps> = ({
         return sendRequest()
       case ButtonActionTypeEnum.GoToPage:
         if (api_key_param && columnId)
-          navigate(`${ROUTES.PAGE.path}/${action}?${api_key_param}=${columnId}`)
+          navigate(`${page?.route}/${action}?${api_key_param}=${columnId}`)
         else {
-          navigate(`${ROUTES.PAGE.path}/${action}`)
+          navigate(`${page?.route}/${action}`)
         }
         return
       case ButtonActionTypeEnum.OpenModal:

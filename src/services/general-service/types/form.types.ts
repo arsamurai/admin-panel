@@ -74,4 +74,5 @@ export enum FieldTypeEnum {
   Select = "select",
   Image = "image",
   MultiImage = "multi_image",
+  MultiInput = "multi_input",
 }

@@ -1,6 +1,6 @@
 export interface SwitchVariantProps {
   id: number
-  data: boolean
+  data: 1 | 0
   api_route: string
   api_object_key: string
 }

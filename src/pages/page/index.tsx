@@ -9,7 +9,7 @@ import { View } from "./components/view"
 const Page = () => {
   const { pathname } = useLocation()
   const { general, isLoading } = useGeneral()
-  const page = general?.pages?.find(page => page.route === pathname)
+  const page = general?.pages?.find(page => pathname.includes(page.route))
 
   if (isLoading) {
     return null

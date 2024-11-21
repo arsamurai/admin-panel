@@ -21,7 +21,7 @@ import { FormattedMenu, enter, leave, linkTo, nestedMenu } from "./side-menu"
 const RootLayout = () => {
   const { general, isLoading } = useGeneral()
   const { pathname } = useLocation()
-  const page = general?.pages?.find(page => page.route === pathname)
+  const page = general?.pages?.find(page => pathname.includes(page.route))
   const pageName = isLoading ? "Загрузка..." : page?.title
   const [compactMenuOnHover, setCompactMenuOnHover] = useState(false)
   const [activeMobileMenu, setActiveMobileMenu] = useState(false)

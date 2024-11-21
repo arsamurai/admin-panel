@@ -10,10 +10,13 @@ const SwitchVariant: FC<SwitchVariantProps> = ({ id, api_route, api_object_key, 
   const [value, setValue] = useState(data)
 
   const toggle = async () => {
+    const newValue = value === 1 ? 0 : 1
+
+    setValue(newValue)
     try {
       const response = await fetch(withBackendHost(`${api_route}${id}`), {
         method: "POST",
-        body: JSON.stringify({ id, [api_object_key]: !value }),
+        body: JSON.stringify({ id, [api_object_key]: newValue }),
       })
 
       if (!response.ok) {
@@ -22,12 +25,11 @@ const SwitchVariant: FC<SwitchVariantProps> = ({ id, api_route, api_object_key, 
     } catch {
       showToast("Щось пішло не так!", { type: "error" })
     }
-    setValue(prev => !prev)
   }
 
   return (
     <Switch>
-      <Switch.Input id={`switch-${id}`} type="checkbox" onChange={toggle} checked={value} />
+      <Switch.Input id={`switch-${id}`} type="checkbox" onChange={toggle} checked={value === 1} />
     </Switch>
   )
 }

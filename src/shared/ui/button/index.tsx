@@ -49,8 +49,8 @@ const Button: ButtonComponent = forwardRef(
       "bg-secondary/70 border-secondary/70 text-slate-500",
       "[&:hover:not(:disabled)]:bg-slate-100 [&:hover:not(:disabled)]:border-slate-100",
     ]
-    const success = ["bg-success border-success text-slate-900"]
-    const warning = ["bg-warning border-warning text-slate-900"]
+    const success = ["bg-success border-success text-white"]
+    const warning = ["bg-warning border-warning text-white"]
     const pending = ["bg-pending border-pending text-white"]
     const danger = ["bg-danger border-danger text-white"]
     const dark = ["bg-dark border-dark text-white"]

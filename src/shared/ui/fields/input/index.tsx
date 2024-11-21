@@ -10,11 +10,20 @@ interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
 type InputRef = React.ComponentPropsWithRef<"input">["ref"]
 
 const Input = forwardRef((props: InputProps, ref: InputRef) => {
-  const { formInputSize, rounded, className, placeholder, ...computedProps } = props
+  const { formInputSize, rounded, className, placeholder, onChange, maxLength, ...computedProps } =
+    props
   return (
     <input
       {...computedProps}
       ref={ref}
+      onChange={e => {
+        if (maxLength && e.target.value.length <= maxLength) {
+          onChange?.(e)
+        } else {
+          onChange?.(e)
+        }
+      }}
+      maxLength={maxLength}
       className={cn([
         "disabled:cursor-not-allowed disabled:bg-slate-100",
         "[&[readonly]]:cursor-not-allowed [&[readonly]]:bg-slate-100",

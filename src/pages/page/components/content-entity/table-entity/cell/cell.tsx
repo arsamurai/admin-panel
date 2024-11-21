@@ -19,11 +19,11 @@ export const Cell: FC<CellProps> = ({
 }) => {
   switch (type) {
     case ColumnTypeEnum.Text:
-      return <p>{data}</p>
+      return <p>{Array.isArray(data) ? data.join(", ") : data}</p>
     case ColumnTypeEnum.Link:
       return (
         <a href={page} target="_blank" rel="noreferrer" className="text-blue-400 underline">
-          {data}
+          {Array.isArray(data) ? data.join(", ") : data}
         </a>
       )
     case ColumnTypeEnum.Badge:
@@ -37,7 +37,7 @@ export const Cell: FC<CellProps> = ({
       return (
         <SwitchVariant
           id={columnId}
-          data={typeof data === "boolean" ? data : false}
+          data={typeof data === "number" && data === 1 ? 1 : 0}
           api_route={api_route ?? ""}
           api_object_key={api_object_key ?? ""}
         />
